@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sist.web.mapper.FoodMapper">
+  <select id="foodNearData4" resultType="com.sist.web.vo.FoodVO" parameterType="string">
+    SELECT fno, name, poster, ROWNUM
+    FROM (SELECT fno, name, poster
+    	  FROM menupan_food
+    	  WHERE address LIKE '%'||#{address}||'%'
+    	  ORDER BY hit DESC)
+    WHERE ROWNUM&lt;=4
+  </select>
+</mapper>
