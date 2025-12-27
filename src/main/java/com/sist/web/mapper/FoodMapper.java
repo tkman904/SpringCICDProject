@@ -5,6 +5,7 @@ import java.util.*;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
 import org.springframework.stereotype.Repository;
 
 import com.sist.web.vo.*;
@@ -44,4 +45,15 @@ public interface FoodMapper {
 	@Select("SELECT CEIL(COUNT(*)/12.0) FROM menupan_food "
 			+ "WHERE address LIKE '%'||#{address}||'%'")
 	public int foodFindTotalPage(String address);
+	
+	// 상세보기
+	@Update("UPDATE menupan_food SET "
+			+ "hit = hit+1 "
+			+ "WHERE fno = #{fno}")
+	public void foodHitIncrement(int fno);
+	
+	@Select("SELECT fno, name, type, phone, address, score, theme, price, time, parking, poster, content "
+			+ "FROM menupan_food "
+			+ "WHERE fno = #{fno}")
+	public FoodVO foodDetailData(int fno);
 }

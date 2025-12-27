@@ -39,7 +39,7 @@ p {
             	<c:forEach var="vo" items="${list}">
             		<div class="col-md-3">
 						<div class="thumbnail">
-						  <a href="#">
+						  <a href="/food/detail?fno=${vo.fno}">
 						    <img src="${vo.poster}" style="width: 250px; height: 180px;">
 						    <div class="caption">
 						      <p>${vo.name}</p>
@@ -48,6 +48,19 @@ p {
 						</div>
 					 </div>
             	</c:forEach>
+            </div>
+            <div class="row" style="margin-top: 10px;">
+            	<div class="product__pagination" style="margin: 0px auto;">
+            		<c:if test="${startPage>1}">
+            			<a href="/food/list?page=${startPage-1}">&laquo;</a>
+            		</c:if>
+            		<c:forEach var="i" begin="${startPage}" end="${endPage}">
+            			<a href="/food/list?page=${i}">${i}</a>
+            		</c:forEach>
+            		<c:if test="${endPage<totalpage}">
+            			<a href="/food/list?page=${endPage+1}">&raquo;</a>
+            		</c:if>
+            	</div>
             </div>
         </div>
     </section>
