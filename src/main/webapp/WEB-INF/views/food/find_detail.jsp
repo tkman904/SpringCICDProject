@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="jakarta.tags.core"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -88,20 +89,54 @@
 	    	</div>
 	    	
 	    	<%-- 댓글 --%>
+	    	<div class="row" style="margin: 20px auto;">
+	    		<table class="table">
+	    			<tr>
+	    				<td>
+	    					<table class="table" v-for="rvo in store.reply">
+	    						<tr>
+	    							<td class="text-left">★{{rvo.name}} {{rvo.dbday}}</td>
+	    							<td class="text-right">
+	    								<a href="#" class="btn btn-xs btn-info" v-if="store.sessionId === rvo.id">수정</a>
+	    								<a href="#" class="btn btn-xs btn-danger" v-if="store.sessionId === rvo.id">삭제</a>
+	    							</td>
+	    						</tr>
+	    						<tr>
+	    							<td colspan="2">
+	    								<pre style="white-space: pre-wrap; background-color: white;">{{rvo.msg}}</pre>
+	    							</td>
+	    						</tr>
+	    					</table>
+	    				</td>
+	    			</tr>
+	    		</table>
+	    		<c:if test="${sessionScope.id != null}">
+		    		<table class="table">
+		    			<tr>
+		    				<td class="text-center">
+		    					<textarea rows="4" cols="60" style="float: left;" ref="msgRef" v-model="store.msg"></textarea>
+		    					<button class="btn-success" style="width: 80px; height: 102px; float: left; margin-left: 2px;" @click="store.foodReplyInsert(fno, msgRef)">댓글쓰기</button>
+		    				</td>
+		    			</tr>
+		    		</table>
+	    		</c:if>
+	    	</div>
 		</div>
 	</section>
 	<script src="/foodjs/foodStore.js"></script>
 	<script>
-		const { createApp, onMounted } = Vue
+		const { createApp, onMounted, ref } = Vue
 		const { createPinia } = Pinia
 		const app = createApp({
 			setup() {
 				const store = useFoodStore()
     			const params = new URLSearchParams(location.search)
     			const fno = params.get('fno')
+    			const msgRef = ref(null)
     			
     			onMounted(()=> {
     				store.foodDetailData(fno)
+    				store.foodReplyData(fno)
     				// 데이터 변경 감지
     				// 완성된 데이터 : computed()
     				if(!store.address) {
@@ -159,7 +194,9 @@
     				document.head.appendChild(script)
     			}
     			return {
-    				store
+    				store,
+    				msgRef,
+    				fno
     			}
 			}
 		})
