@@ -33,7 +33,7 @@ p {
     <!-- Breadcrumb Section End -->
     
     <!-- Product Details Section Begin -->
-    <section class="product-details spad" id="board_delete">
+    <section class="product-details spad" id="food_list">
         <div class="container">
             <div class="row" style="margin: 0px auto;">
             	<c:forEach var="vo" items="${list}">
