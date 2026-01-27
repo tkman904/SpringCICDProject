@@ -37,6 +37,7 @@
 				</div>
 				<div class="col-lg-6 col-md-6">
 					<div class="product__details__text">
+						<div class="meta mb0"> <span class="meta-author">타입명(실제 데이터 들어갈 곳)/카테고리(실제 데이터 들어갈 곳)</span></div>
 						<h3>${vo.name}<span style="color: orange;">${vo.score}</span></h3>
 						<div class="product__details__rating">
 							<i class="fa fa-star"></i>
